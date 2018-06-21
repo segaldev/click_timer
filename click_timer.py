@@ -1,5 +1,9 @@
 from datetime import datetime
 from collections import OrderedDict
+
+def log(s):
+    print s
+
 class TimerArray(object):
     def __init__(self):
         self.timers = OrderedDict()
