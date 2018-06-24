@@ -34,7 +34,7 @@ class TimerArray(object):
         if key in self.timers.keys():
             return self.timers[key]
         else:
-            raise KeyError
+            raise KeyError('Timer %s could not be found. Registered timers are %s' % (key, self.timers.keys()))
 
 class Timer(object):
     def __init__(self, name):
