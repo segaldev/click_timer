@@ -8,9 +8,9 @@ class TimerArray(object):
     def __init__(self):
         self.timers = OrderedDict()
 
-    def click(self, timer_code, log_on_click=False, continue_where_stopped=False):
+    def click(self, timer_code, verbose=False, continue_where_stopped=False):
         if timer_code not in self.timers.keys():
-            timer = Timer()
+            timer = Timer(timer_code)
             self.timers[timer_code] = timer
             running = False
         else:
@@ -18,20 +18,24 @@ class TimerArray(object):
 
         if not timer.running:
             timer.start_timer(continue_where_stopped)
+            if verbose:
+                seconds = timer.get_current_reading()
+                log(timer)
         else:
             timer.stop_timer()
-            if log_on_click:
+            if verbose:
                 seconds = timer.get_current_reading()
-                log('%s: %s seconds' % (timer_code, seconds))
+                log(timer)
     
     def __repr__(self):
         return str(self.timers)
 
 class Timer(object):
-    def __init__(self):
+    def __init__(self, name):
         self.running = False
         self.start_time = datetime.now()
         self.last_reading = 0
+        self.name = name
     
     def get_current_reading(self):
         if self.running:
@@ -49,4 +53,4 @@ class Timer(object):
         self.running = False
 
     def __repr__(self):
-        return 'running: %s, current_reading: %s' % (self.running, self.get_current_reading())
+        return '%s -> running: %s, current_reading: %s' % (self.name, self.running, self.get_current_reading())
