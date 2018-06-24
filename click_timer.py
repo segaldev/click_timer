@@ -30,6 +30,12 @@ class TimerArray(object):
     def __repr__(self):
         return str(self.timers)
 
+    def __getitem__(self, key):
+        if key in self.timers.keys():
+            return self.timers[key]
+        else:
+            raise KeyError
+
 class Timer(object):
     def __init__(self, name):
         self.running = False
